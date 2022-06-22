@@ -37,6 +37,12 @@ for(const folders of events){
 client.login(process.env.TOKEN);
 ```
 
+### Ejemplo de uso del dotenv.
+Crea su archivo .env, despues de instalar y requerir la dependencia (dotenv) y dentro de ese archivo colocan
+```shell
+TOKEN = SU_MALDITO_TOKEN
+```
+
 # Ejemplo de como debe estar organizadas las carpetas, de eventos y comandos. y de como se usa el handler de comandos.
 ![image](https://user-images.githubusercontent.com/64504421/175132259-790fa0b6-d301-413c-a4c9-8e2abb7b4a97.png)
 
