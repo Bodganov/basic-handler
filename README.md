@@ -41,24 +41,40 @@ client.login(process.env.TOKEN);
 ![image](https://user-images.githubusercontent.com/64504421/175132259-790fa0b6-d301-413c-a4c9-8e2abb7b4a97.png)
 
 ## Ejemplo para usar el handler de eventos.
+
+Evento ready.
 ```js
 module.exports = {
   name: 'ready', 
 
   run: async (client) => {
-    connect(process.env.URLMONGOOSE, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }).then(() => { 
-      console.log(`DataBase connect.`); 
-    }).catch(() => {
-      console.log(`Error in load of DataBase`);
-    });
-    
     console.log(`Logeado correctamente como ${client.user.username} (${client.user.id})`);
-    try {
-      await client.application?.commands.set(client.data);
-    } catch(e) { console.error(e) }
+  }
+}
+```
+
+Evento messageCreate
+```js
+module.exports = {
+  name: 'messageCreate',
+  run: async (client, message) => {
+    let prefix = "!";
+    if(!message.guild || !message.channel || message.author.bot) return;
+    if(!message.content.toLocaleLowerCase().startsWith(prefix)) return;
+    const [command, ...args] = message.content.slice(prefix.length).trim().split(/\+s/);
+    const cmd = client.commands.find((c) => c.name === command || c.alias && c.alias?.toLocaleLowerCase().includes(command));
+    if (cmd) cmd.run(message, args);
+  }
+}
+```
+
+## Ejemplo para usar el handler en comandos.
+```js
+module.exports = {
+  name: 'comando',
+  alias: ["alias1", "alias2"],
+  run: async (message, args) => {
+    // Código
   }
 }
 ```
